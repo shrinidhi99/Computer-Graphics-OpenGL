@@ -1,31 +1,30 @@
-// C program to demonstrate
-// drawing a circle using
-// OpenGL
-#include <stdio.h>
-#include <GL/glut.h>
-
-void display()
-{
-    glClear(GL_COLOR_BUFFER_BIT);
-    glBegin(GL_LINES);
-        glVertex2d(1,1);
-        glVertex2d(0,0);
-    glEnd();
-    glFlush();
+// #include <windows.h>  // for MS Windows
+#include <GL/glut.h>  // GLUT, include glu.h and gl.h
+ 
+/* Handler for window-repaint event. Call back when the window first appears and
+   whenever the window needs to be re-painted. */
+void display() {
+   glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
+   glClear(GL_COLOR_BUFFER_BIT);         // Clear the color buffer (background)
+ 
+   glBegin(GL_LINES);              // Line
+      glColor3f(0.0f, 1.0f, 0.0f); // Green
+      glVertex2f(-0.5f, -0.5f);    // x, y
+      glVertex2f( 0.5f, -0.5f);
+   glEnd();
+ 
+   glFlush();  // Render now
+}
+ 
+/* Main function: GLUT runs as a console application starting at main()  */
+int main(int argc, char** argv) {
+   glutInit(&argc, argv);                 // Initialize GLUT
+   glutCreateWindow("OpenGL Setup Test"); // Create a window with the given title
+   glutInitWindowSize(400, 400);   // Set the window's initial width & height
+   glutInitWindowPosition(50, 50); // Position the window's initial top-left corner
+   glutDisplayFunc(display); // Register display callback handler for window re-paint
+   glutMainLoop();           // Enter the event-processing loop
+   return 0;
 }
 
-int main(int argc, char **argv)
-{
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 
-    // giving window size in X- and Y- direction
-    glutInitWindowSize(1366, 768);
-    glutInitWindowPosition(0, 0);
-
-    // Giving name to window
-    glutCreateWindow("Line Drawing");
-
-    glutDisplayFunc(display);
-    glutMainLoop();
-}
