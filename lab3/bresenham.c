@@ -7,8 +7,8 @@ void display()
 {
     glClear(GL_COLOR_BUFFER_BIT);
     int x1, x2, y1, y2;
-    gluOrtho2D(-15, 15, -15, 15);
-    x1 = -10,  y1 = -7, x2 = 6, y2 = 5;
+    gluOrtho2D(-20, 20, -20, 20);
+    x1 = -15,  y1 = -10, x2 = 16, y2 = 15;
     glBegin(GL_POINTS);
     // logic
     int m_new = 2 * (y2 - y1); 

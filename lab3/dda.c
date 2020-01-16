@@ -6,6 +6,7 @@
 void display()
 {
     glClear(GL_COLOR_BUFFER_BIT);
+    gluOrtho2D(-10, 10, -10, 10);
     float i, X1, Y1, X2, Y2, dX, dY, steps, X, Y;
     float Xinc, Yinc;
     X1 = 2, Y1 = 1, X2 = 7, Y2 = 6;
@@ -21,9 +22,9 @@ void display()
     printf("dX = %f, dY = %f, Steps = %f, Xinc = %f, Yinc = %f\n.", dX, dY, steps, Xinc, Yinc);
 
     glBegin(GL_POINTS);
-    for (i = 0; i <= steps; i = i + 0.001)
+    for (i = 0; i <= steps; i = i + 1)
     {
-        glVertex2f(0.001*X, 0.001*Y);
+        glVertex2f(X, Y);
         X = X + Xinc;
         Y = Y + Yinc;
     }
