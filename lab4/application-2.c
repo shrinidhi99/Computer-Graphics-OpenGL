@@ -163,67 +163,67 @@ void circle()
     glEnd();
     glPopMatrix();
 
-    glPushMatrix();
-    directionR = (speedR < max_speedL) ? 1 : -1;
-    if (directionR == 1 && flagR == 0)
-    {
-        glTranslatef(speedR + 100, 0.0, 0.0);
-        speedR = speedR + 0.01;
-        if (speedR >= max_speedL)
-        {
-            flagR = 1;
-        }
-    }
-    else
-    {
-        directionR = -1;
-        glTranslatef(speedR + 100, 0.0, 0.0);
-        speedR = speedR - 0.01;
-        if (speedR <= min_speedR)
-        {
-            flagR = 0;
-        }
-    }
-    glRotatef(angleR, 0, 0, 1);
+    // glPushMatrix();
+    // directionR = (speedR < max_speedL) ? 1 : -1;
+    // if (directionR == 1 && flagR == 0)
+    // {
+    //     glTranslatef(speedR + 100, 0.0, 0.0);
+    //     speedR = speedR + 0.01;
+    //     if (speedR >= max_speedL)
+    //     {
+    //         flagR = 1;
+    //     }
+    // }
+    // else
+    // {
+    //     directionR = -1;
+    //     glTranslatef(speedR + 100, 0.0, 0.0);
+    //     speedR = speedR - 0.01;
+    //     if (speedR <= min_speedR)
+    //     {
+    //         flagR = 0;
+    //     }
+    // }
+    // glRotatef(angleR, 0, 0, 1);
 
-    // right wheel
-    X = 0;
-    Y = 0;
-    iR = 10;
-    draw_circle(iR);
-    glEnd();
-    X = 0;
-    Y = 0;
-    oR = 40;
-    draw_circle(oR);
-    glEnd();
-    glBegin(GL_POINTS);
+    // // right wheel
+    // X = 0;
+    // Y = 0;
+    // iR = 10;
+    // draw_circle(iR);
+    // glEnd();
+    // X = 0;
+    // Y = 0;
+    // oR = 40;
+    // draw_circle(oR);
+    // glEnd();
+    // glBegin(GL_POINTS);
 
-    for (i = 10; i <= 40; i++)
-    {
-        glVertex2i(i, 0);
-        glVertex2i(0, i);
-        glVertex2i(-i, 0);
-        glVertex2i(0, -i);
-    }
-    glEnd();
+    // for (i = 10; i <= 40; i++)
+    // {
+    //     glVertex2i(i, 0);
+    //     glVertex2i(0, i);
+    //     glVertex2i(-i, 0);
+    //     glVertex2i(0, -i);
+    // }
+    // glEnd();
 
-    glPopMatrix();
+    // glPopMatrix();
 
     angleL += (-directionL) * 0.02;
     angleR += (-directionR) * 0.02;
 
-    glPushMatrix();
+    // glPushMatrix();
 
-    glTranslatef(speedL, 0.0, 0.0);
-    glBegin(GL_POINTS);
-    for (i = 0; i <= 160; i++)
-        glVertex2i(i, 0);
-    glEnd();
+    // glTranslatef(speedL, 0.0, 0.0);
+    // glBegin(GL_POINTS);
+    // for (i = 0; i <= 160; i++)
+    //     glVertex2i(i, 0);
+    // glEnd();
 
     
 
-    glPopMatrix();
+    // glPopMatrix();
     glBegin(GL_POINTS);
     for (i = -320; i <= 320; i++)
         glVertex2i(i, -40);
