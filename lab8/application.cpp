@@ -4,17 +4,17 @@
 
 int Xmin = 10, Ymin = 10, Xmax = 50, Ymax = 50;
 
-void Bresenham(int x1, int y1, int x2, int y2)
+void Bresenham(int x11, int y111, int x12, int y112)
 {
-    int dx = x2 - x1;
-    int dy = y2 - y1;
+    int dx = x12 - x11;
+    int dy = y112 - y111;
 
     int p = 2 * dy - dx;
 
-    int X = x1, Y = y1;
+    int X = x11, Y = y111;
     int i;
     glBegin(GL_POINTS);
-    for (; X <= x2; X++)
+    for (; X <= x12; X++)
     {
         glVertex2d(X, Y);
         if (p >= 0)
@@ -44,21 +44,12 @@ int computeCode(int x, int y)
     return code;
 }
 
-void chessboard()
+void clip(int x11, int y11, int x12, int y12)
 {
-    glClear(GL_COLOR_BUFFER_BIT);
-    int x1, y1, x2, y2;
-    x1 = 20, y1 = 60;
-    x2 = 60, y2 = 60;
-    // printf("Enter Xmin, Ymin, Xmax, Ymax\n");
-    // scanf("%d%d%d%d", &Xmin, &Ymin, &Xmax, &Ymax);
-    // printf("Enter line coordinates (x1,y1), (x2,y2):\n");
-    // scanf("%d%d%d%d", &x1, &y1, &x2, &y2);
-    // Bresenham(x1, y1, x2, y2);
     glColor3ub(0, 0, 0);
     glBegin(GL_LINES);
-    glVertex2d(x1, y1);
-    glVertex2d(x2, y2);
+    glVertex2d(x11, y11);
+    glVertex2d(x12, y12);
     glEnd();
     // Bresenham(Xmin, Ymin, Xmax, Ymin);
     glBegin(GL_LINES);
@@ -80,8 +71,8 @@ void chessboard()
     glVertex2d(Xmin, Ymax);
     glVertex2d(Xmax, Ymax);
     glEnd();
-    int code1 = computeCode(x1, y1);
-    int code2 = computeCode(x2, y2);
+    int code1 = computeCode(x11, y11);
+    int code2 = computeCode(x12, y12);
     // bool accept = false;
     int accept = 0;
     while (1)
@@ -91,8 +82,8 @@ void chessboard()
             accept = 1;
             glColor3ub(255, 0, 0);
             glBegin(GL_LINES);
-            glVertex2d(x1, y1);
-            glVertex2d(x2, y2);
+            glVertex2d(x11, y11);
+            glVertex2d(x12, y12);
             glEnd();
             break;
         }
@@ -115,43 +106,107 @@ void chessboard()
 
             if (code_out & 8)
             {
-                x = x1 + (x2 - x1) * (Ymax - y1) / (y2 - y1);
+                x = x11 + (x12 - x11) * (Ymax - y11) / (y12 - y11);
                 y = Ymax;
             }
 
             else if (code_out & 4)
             {
-                x = x1 + (x2 - x1) * (Ymin - y1) / (y2 - y1);
+                x = x11 + (x12 - x11) * (Ymin - y11) / (y12 - y11);
                 y = Ymin;
             }
 
             else if (code_out & 2)
             {
-                y = y1 + (y2 - y1) * (Xmax - x1) / (x2 - x1);
+                y = y11 + (y12 - y11) * (Xmax - x11) / (x12 - x11);
                 x = Xmax;
             }
 
             else if (code_out & 1)
             {
-                y = y1 + (y2 - y1) * (Xmin - x1) / (x2 - x1);
+                y = y11 + (y12 - y11) * (Xmin - x11) / (x12 - x11);
                 x = Xmin;
             }
 
             if (code_out == code1)
             {
-                x1 = x;
-                y1 = y;
-                code1 = computeCode(x1, y1);
+                x11 = x;
+                y11 = y;
+                code1 = computeCode(x11, y11);
             }
 
             else
             {
-                x2 = x;
-                y2 = y;
-                code2 = computeCode(x2, y2);
+                x12 = x;
+                y12 = y;
+                code2 = computeCode(x12, y12);
             }
         }
     }
+}
+
+void display()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+    int x11, y11, x12, y12;
+    int x21, y21, x22, y22;
+    int x31, y31, x32, y32;
+
+    // triangle completely inside
+    x11 = 30, y11 = 15;
+    x12 = 45, y12 = 15;
+
+    clip(x11, y11, x12, y12);
+
+    x21 = 45, y21 = 15;
+    x22 = 35, y22 = 30;
+
+    clip(x21, y21, x22, y22);
+
+    x31 = 35, y31 = 30;
+    x32 = 30, y32 = 15;
+
+    clip(x31, y31, x32, y32);
+
+
+    // triangle partially inside
+    x11 = 0, y11 = 20;
+    x12 = 20, y12 = 20;
+
+    clip(x11, y11, x12, y12);
+
+    x21 = 20, y21 = 20;
+    x22 = 15, y22 = 60;
+
+    clip(x21, y21, x22, y22);
+
+    x31 = 15, y31 = 60;
+    x32 = 0, y32 = 20;
+
+    clip(x31, y31, x32, y32);
+
+
+    // triangle completely outside
+    x11 = 30, y11 = -30;
+    x12 = 60, y12 = -30;
+
+    clip(x11, y11, x12, y12);
+
+    x21 = 60, y21 = -30;
+    x22 = 40, y22 = 0;
+
+    clip(x21, y21, x22, y22);
+
+    x31 = 40, y31 = 0;
+    x32 = 30, y32 = -30;
+
+    clip(x31, y31, x32, y32);
+
+    // printf("Enter Xmin, Ymin, Xmax, Ymax\n");
+    // scanf("%d%d%d%d", &Xmin, &Ymin, &Xmax, &Ymax);
+    // printf("Enter line coordinates (x11,y111), (x12,y112):\n");
+    // scanf("%d%d%d%d", &x11, &y111, &x12, &y112);
+    // Bresenham(x11, y111, x12, y112);
 
     // if (accept)
     // {
@@ -178,6 +233,6 @@ int main(int argc, char **argv)
     glutInitWindowSize(640, 640);
     glutCreateWindow("sutherland");
     Init();
-    glutDisplayFunc(chessboard);
+    glutDisplayFunc(display);
     glutMainLoop();
 }

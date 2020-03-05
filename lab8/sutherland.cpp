@@ -4,17 +4,17 @@
 
 int Xmin = 10, Ymin = 10, Xmax = 50, Ymax = 50;
 
-void Bresenham(int x1, int y1, int x2, int y2)
+void Bresenham(int x11, int y111, int x12, int y112)
 {
-    int dx = x2 - x1;
-    int dy = y2 - y1;
+    int dx = x12 - x11;
+    int dy = y112 - y111;
 
     int p = 2 * dy - dx;
 
-    int X = x1, Y = y1;
+    int X = x11, Y = y111;
     int i;
     glBegin(GL_POINTS);
-    for (; X <= x2; X++)
+    for (; X <= x12; X++)
     {
         glVertex2d(X, Y);
         if (p >= 0)
@@ -47,18 +47,18 @@ int computeCode(int x, int y)
 void chessboard()
 {
     glClear(GL_COLOR_BUFFER_BIT);
-    int x1, y1, x2, y2;
-    x1 = 20, y1 = 60;
-    x2 = 60, y2 = 60;
+    int x11, y11, x12, y12;
+    x11 = 20, y11 = 60;
+    x12 = 60, y12 = 60;
     // printf("Enter Xmin, Ymin, Xmax, Ymax\n");
     // scanf("%d%d%d%d", &Xmin, &Ymin, &Xmax, &Ymax);
-    // printf("Enter line coordinates (x1,y1), (x2,y2):\n");
-    // scanf("%d%d%d%d", &x1, &y1, &x2, &y2);
-    // Bresenham(x1, y1, x2, y2);
+    // printf("Enter line coordinates (x11,y111), (x12,y112):\n");
+    // scanf("%d%d%d%d", &x11, &y111, &x12, &y112);
+    // Bresenham(x11, y111, x12, y112);
     glColor3ub(0, 0, 0);
     glBegin(GL_LINES);
-    glVertex2d(x1, y1);
-    glVertex2d(x2, y2);
+    glVertex2d(x11, y11);
+    glVertex2d(x12, y12);
     glEnd();
     // Bresenham(Xmin, Ymin, Xmax, Ymin);
     glBegin(GL_LINES);
@@ -80,8 +80,8 @@ void chessboard()
     glVertex2d(Xmin, Ymax);
     glVertex2d(Xmax, Ymax);
     glEnd();
-    int code1 = computeCode(x1, y1);
-    int code2 = computeCode(x2, y2);
+    int code1 = computeCode(x11, y11);
+    int code2 = computeCode(x12, y12);
     // bool accept = false;
     int accept = 0;
     while (1)
@@ -91,8 +91,8 @@ void chessboard()
             accept = 1;
             glColor3ub(255, 0, 0);
             glBegin(GL_LINES);
-            glVertex2d(x1, y1);
-            glVertex2d(x2, y2);
+            glVertex2d(x11, y11);
+            glVertex2d(x12, y12);
             glEnd();
             break;
         }
@@ -115,40 +115,40 @@ void chessboard()
 
             if (code_out & 8)
             {
-                x = x1 + (x2 - x1) * (Ymax - y1) / (y2 - y1);
+                x = x11 + (x12 - x11) * (Ymax - y11) / (y12 - y11);
                 y = Ymax;
             }
 
             else if (code_out & 4)
             {
-                x = x1 + (x2 - x1) * (Ymin - y1) / (y2 - y1);
+                x = x11 + (x12 - x11) * (Ymin - y11) / (y12 - y11);
                 y = Ymin;
             }
 
             else if (code_out & 2)
             {
-                y = y1 + (y2 - y1) * (Xmax - x1) / (x2 - x1);
+                y = y11 + (y12 - y11) * (Xmax - x11) / (x12 - x11);
                 x = Xmax;
             }
 
             else if (code_out & 1)
             {
-                y = y1 + (y2 - y1) * (Xmin - x1) / (x2 - x1);
+                y = y11 + (y12 - y11) * (Xmin - x11) / (x12 - x11);
                 x = Xmin;
             }
 
             if (code_out == code1)
             {
-                x1 = x;
-                y1 = y;
-                code1 = computeCode(x1, y1);
+                x11 = x;
+                y11 = y;
+                code1 = computeCode(x11, y11);
             }
 
             else
             {
-                x2 = x;
-                y2 = y;
-                code2 = computeCode(x2, y2);
+                x12 = x;
+                y12 = y;
+                code2 = computeCode(x12, y12);
             }
         }
     }
