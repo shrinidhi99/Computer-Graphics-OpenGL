@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <math.h>
+    #include <math.h>
 #include <GL/glut.h>
 #define pi 0.0174533
 
