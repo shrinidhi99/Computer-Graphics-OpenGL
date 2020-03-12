@@ -1,3 +1,3 @@
 ## Lab 9
-* [ ] Sierpinski
-* [ ] Teapot
+* [x] Sierpinski with modifications
+* [x] Teapot with modifications
